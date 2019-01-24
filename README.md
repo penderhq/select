@@ -14,6 +14,7 @@ npm install @cmds/select --save
 
 | Property | Type | Required? | Description |
 |:---|:---|:---:|:---|
+| clearable | Boolean |  | Whether the user can clear the selected option |
 | alignLeft | Boolean |  | Whether the dropdown should align left |
 | value | String | | Selected option |
 | options | Boolean | ✓ | List of options to choose from. |

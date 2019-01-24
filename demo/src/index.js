@@ -119,6 +119,57 @@ class Example2 extends Component {
     }
 }
 
+class Example3 extends Component {
+
+    state = {
+        value: null
+    }
+
+    render() {
+        return <div>
+            <h2>
+                Clearable
+            </h2>
+            <div
+                className={css`
+                    width: 200px;
+                    height: 40px;
+                    display: flex;
+                `}
+            >
+                <Select
+                    clearable={true}
+                    value={this.state.value}
+                    alignLeft={true}
+                    options={[{
+                        id: 'opt1',
+                        name: 'Option 1'
+                    }, {
+                        id: 'opt2',
+                        name: 'Option 2'
+                    }, {
+                        id: 'opt3',
+                        name: 'Option 3'
+                    }]}
+                    onChange={({value}) => {
+
+                        this.setState({
+                            value
+                        })
+                    }}
+                />
+            </div>
+            <h3>
+                State
+            </h3>
+            <pre>
+                {JSON.stringify(this.state, null, 2)}
+            </pre>
+        </div>
+    }
+}
+
+
 class Demo extends React.Component {
 
     render() {
@@ -128,6 +179,7 @@ class Demo extends React.Component {
                 <h1>SingleSelect Demo</h1>
                 <Example1/>
                 <Example2/>
+                <Example3/>
             </div>
         )
     }

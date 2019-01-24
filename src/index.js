@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import arrowDown from '@cmds/icons/es/arrowDown'
 import ClickOutside from 'react-click-outside'
 import {css, cx} from 'emotion'
@@ -18,7 +19,7 @@ const Option = ({id, active, name, icon, onClick}) => (
                 opacity: 0.75;
             }
         `, active ? css`
-            background: #fff;
+            background-color: #fff;
             border-radius: 3px;
             color: #000;
         ` : null
@@ -30,7 +31,7 @@ const Option = ({id, active, name, icon, onClick}) => (
         }}
     >
         {icon ? icon({height: 16, style: {marginRight: 8, color: '#6C9AEF'}}) : null}
-        {name}
+        {name ? name : <div>&nbsp;</div>}
     </div>
 )
 
@@ -39,7 +40,21 @@ const defaultOptionNameGetter = option => option.name
 export default class Select extends React.Component {
 
     static defaultProps = {
+        clearable: false,
         alignRight: false
+    }
+
+    static propTypes = {
+        clearable: PropTypes.bool,
+        alignLeft: PropTypes.bool,
+        value: PropTypes.string,
+        options: PropTypes.arrayOf(
+            PropTypes.shape({
+                id: PropTypes.string.isRequired,
+                name: PropTypes.string
+            })
+        ),
+        onChange: PropTypes.func
     }
 
     state = {
@@ -139,6 +154,13 @@ export default class Select extends React.Component {
                             )}
                             onClickOutside={this.close}
                         >
+                            {this.props.clearable ? (
+                                <Option
+                                    id={null}
+                                    active={this.props.value === null}
+                                    onClick={this.handleChange}
+                                />
+                            ) : null}
                             {this.props.options.map((option) => (
                                 <Option
                                     key={option.id}
