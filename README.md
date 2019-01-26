@@ -1,5 +1,7 @@
 # Select
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/entercosmos/select.svg)](https://greenkeeper.io/)
+
 [![npm package][npm-badge]][npm]
 
 Used for selecting one option from a list of options.
