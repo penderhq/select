@@ -4,7 +4,7 @@ import arrowDown from '@cmds/icons/es/arrowDown'
 import ClickOutside from 'react-click-outside'
 import {css, cx} from 'emotion'
 
-const Option = ({id, active, name, icon, onClick}) => (
+const EmptyOption = ({selected, onClick}) => (
     <div
         className={cx(
             css`
@@ -18,24 +18,63 @@ const Option = ({id, active, name, icon, onClick}) => (
             &:active {
                 opacity: 0.75;
             }
-        `, active ? css`
+        `, selected ? css`
             background-color: #fff;
             border-radius: 3px;
             color: #000;
         ` : null
         )}
-        onClick={() => {
-            onClick({
-                id
-            })
-        }}
+        onClick={onClick}
     >
-        {icon ? icon({height: 16, style: {marginRight: 8, color: '#6C9AEF'}}) : null}
-        {name ? name : <div>&nbsp;</div>}
+        <div>&nbsp;</div>
     </div>
 )
 
-const defaultOptionNameGetter = option => option.name
+const optionItemRenderer = ({key, id, className, selected, option, icon, onClick, optionRenderer}) => (
+    <div
+        key={key}
+        className={className}
+        onClick={onClick}
+    >
+        {optionRenderer({option, inList: true})}
+    </div>
+)
+
+const createOptionClassName = ({selected}) => cx(
+    css`
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 8px;
+        padding-right: 8px;
+        cursor: pointer;
+        align-items: center;
+        display: flex;
+        min-height: 34px;
+        &:active {
+            opacity: 0.75;
+        }
+    `, selected ? css`
+        background-color: #fff;
+        border-radius: 3px;
+        color: #000;
+    ` : null
+)
+
+const defaultOptionRenderer = ({option, inList}) => (
+    <span
+        className={css`
+            max-width: 100%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        `}
+    >
+    {inList && option.icon ? option.icon({
+        height: 16,
+        style: {marginRight: 8, color: '#6C9AEF'}
+    }) : null}
+        {option.name ? option.name : <div>&nbsp;</div>}
+    </span>
+)
 
 export default class Select extends React.Component {
 
@@ -48,6 +87,7 @@ export default class Select extends React.Component {
         clearable: PropTypes.bool,
         alignLeft: PropTypes.bool,
         value: PropTypes.string,
+        optionRenderer: PropTypes.func,
         options: PropTypes.arrayOf(
             PropTypes.shape({
                 id: PropTypes.string.isRequired,
@@ -63,7 +103,7 @@ export default class Select extends React.Component {
 
     render() {
 
-        const optionNameGetter = this.props.optionNameGetter || defaultOptionNameGetter
+        const optionRenderer = this.props.optionRenderer || defaultOptionRenderer
 
         const option = this.props.options.find(option => {
             return option.id === this.props.value
@@ -94,7 +134,7 @@ export default class Select extends React.Component {
                         cursor: pointer;
                         border-radius: 3px;
                         position: relative;
-                        &:hover {
+                        &:active {
                             background-color: hsla(0,0%,0%,0.05);
                         }
                     `
@@ -119,15 +159,9 @@ export default class Select extends React.Component {
                             )}
                         >
                             {option ? (
-                                <span
-                                    className={css`
-                                        max-width: 100%;
-                                        text-overflow: ellipsis;
-                                        white-space: nowrap;
-                                    `}
-                                >
-                            {option.name}
-                            </span>
+                                optionRenderer({
+                                    option
+                                })
                             ) : null}
                         </div>
                         <div>
@@ -155,22 +189,31 @@ export default class Select extends React.Component {
                             onClickOutside={this.close}
                         >
                             {this.props.clearable ? (
-                                <Option
-                                    id={null}
-                                    active={this.props.value === null}
-                                    onClick={this.handleChange}
+                                <EmptyOption
+                                    selected={this.props.value === null}
+                                    onClick={() => this.handleChange({
+                                        id: null
+                                    })}
                                 />
                             ) : null}
-                            {this.props.options.map((option) => (
-                                <Option
-                                    key={option.id}
-                                    id={option.id}
-                                    icon={option.icon}
-                                    name={optionNameGetter(option)}
-                                    active={option.id === this.props.value}
-                                    onClick={this.handleChange}
-                                />
-                            ))}
+                            {this.props.options.map((option) => {
+
+                                const selected = option.id === this.props.value
+
+                                return optionItemRenderer({
+                                    className: createOptionClassName({
+                                        selected
+                                    }),
+                                    key: option.id,
+                                    id: option.id,
+                                    option,
+                                    selected,
+                                    optionRenderer,
+                                    onClick: () => this.handleChange({
+                                        id: option.id
+                                    })
+                                })
+                            })}
                         </ClickOutside>
                     ) : null}
                 </div>
