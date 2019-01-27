@@ -15,6 +15,7 @@ npm install @cmds/select --save
 | Property | Type | Required? | Description |
 |:---|:---|:---:|:---|
 | clearable | Boolean |  | Whether the user can clear the selected option |
+| noOptionsRenderer | Function | | Responsible for the empty state for the option list |
 | optionRenderer | Function | | Responsible for rendering a custom version of the option `({option: object, inList: boolean}): jsx` |
 | alignLeft | Boolean |  | Whether the dropdown should align left |
 | value | String | | Selected option |

@@ -16,6 +16,7 @@ injectGlobal`
 `
 
 import Select from '../../src'
+import OptionList from '../../src/OptionList'
 
 class Example1 extends Component {
 
@@ -243,6 +244,171 @@ class Example4 extends Component {
     }
 }
 
+class Example5 extends Component {
+
+    state = {
+        value: null
+    }
+
+    render() {
+        return <div>
+            <h2>
+                Inline OptionList
+            </h2>
+            <div
+                className={css`
+                    width: 200px;
+                    display: flex;
+                `}
+            >
+                <OptionList
+                    className={css`
+                        position: relative;
+                    `}
+                    clearable={true}
+                    value={this.state.value}
+                    alignLeft={true}
+                    options={[{
+                        id: 'opt1',
+                        name: 'Option 1'
+                    }, {
+                        id: 'opt2',
+                        name: 'Option 2'
+                    }, {
+                        id: 'opt3',
+                        name: 'Option 3'
+                    }]}
+                    onOptionClick={({id}) => {
+
+                        this.setState({
+                            value: id
+                        })
+                    }}
+                />
+            </div>
+            <h3>
+                State
+            </h3>
+            <pre>
+                {JSON.stringify(this.state, null, 2)}
+            </pre>
+        </div>
+    }
+}
+
+class Example6 extends Component {
+
+    state = {
+        options: [],
+        open: false
+    }
+
+    render() {
+
+        const availableOptions = [{
+            id: 'opt1',
+            name: 'Option 1'
+        }, {
+            id: 'opt2',
+            name: 'Option 2'
+        }, {
+            id: 'opt3',
+            name: 'Option 3'
+        }]
+
+        const options = availableOptions.filter(option => {
+            return this.state.options.includes(option.id) === false
+        })
+
+        return <div>
+            <h2>
+                Button with OptionList
+            </h2>
+            <div
+                className={css`
+                    width: 200px;
+                    margin-bottom: 24px;
+                `}
+            >
+                <div
+                    className={css`
+                        position: relative;
+
+                    `}
+                >
+                    <button
+                        type={'button'}
+                        className={css`
+                            padding-top: 4px;
+                            padding-bottom: 4px;
+                            padding-left: 16px;
+                            padding-right: 16px;
+                            border-radius: 3px;
+                            background-color: hsla(0,0%,0%,0.05);
+                            font-weight: 500;
+                            color: #111;
+                            border: none;
+                        `}
+                        onClick={() => this.setState({open: true})}
+                    >
+                        Select an option
+                    </button>
+                    {this.state.open ? (
+                        <OptionList
+                            className={css`
+                                margin-top: -21px;
+                            `}
+                            alignLeft={true}
+                            options={options}
+                            onOptionClick={({id}) => {
+
+                                const options = [].concat(this.state.options)
+
+                                options.push(id)
+
+                                this.setState({
+                                    options,
+                                    open: false
+                                })
+                            }}
+                            onClickOutside={() => this.setState({open: false})}
+                        />
+                    ) : null}
+                </div>
+            </div>
+            <div>
+                {this.state.options.map((id) => {
+
+                    const option = availableOptions.find(option => {
+                        return option.id === id
+                    })
+
+                    return (
+                        <div className={css`margin-bottom: 8px;`}>
+                            {option.name} <button type={'button'} onClick={() => this.handleRemoveOption({id})}>remove</button>
+                        </div>
+                    )
+                })}
+            </div>
+            <h3>
+                State
+            </h3>
+            <pre>
+                {JSON.stringify(this.state, null, 2)}
+            </pre>
+        </div>
+    }
+
+    handleRemoveOption = ({id}) => {
+
+        const options = this.state.options.filter(optionId => optionId !== id)
+
+        this.setState({
+            options
+        })
+    }
+}
+
 class Demo extends React.Component {
 
     render() {
@@ -254,6 +420,8 @@ class Demo extends React.Component {
                 <Example2/>
                 <Example3/>
                 <Example4/>
+                <Example5/>
+                <Example6/>
             </div>
         )
     }

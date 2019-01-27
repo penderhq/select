@@ -1,80 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import arrowDown from '@cmds/icons/es/arrowDown'
-import ClickOutside from 'react-click-outside'
 import {css, cx} from 'emotion'
+import OptionList from './OptionList'
 
-const EmptyOption = ({selected, onClick}) => (
-    <div
-        className={cx(
-            css`
-            padding-top: 8px;
-            padding-bottom: 8px;
-            padding-left: 8px;
-            padding-right: 8px;
-            cursor: pointer;
-            align-items: center;
-            display: flex;
-            &:active {
-                opacity: 0.75;
-            }
-        `, selected ? css`
-            background-color: #fff;
-            border-radius: 3px;
-            color: #000;
-        ` : null
-        )}
-        onClick={onClick}
-    >
-        <div>&nbsp;</div>
-    </div>
-)
-
-const optionItemRenderer = ({key, id, className, selected, option, icon, onClick, optionRenderer}) => (
-    <div
-        key={key}
-        className={className}
-        onClick={onClick}
-    >
-        {optionRenderer({option, inList: true})}
-    </div>
-)
-
-const createOptionClassName = ({selected}) => cx(
-    css`
-        padding-top: 4px;
-        padding-bottom: 4px;
-        padding-left: 8px;
-        padding-right: 8px;
-        cursor: pointer;
-        align-items: center;
-        display: flex;
-        min-height: 34px;
-        &:active {
-            opacity: 0.75;
-        }
-    `, selected ? css`
-        background-color: #fff;
-        border-radius: 3px;
-        color: #000;
-    ` : null
-)
-
-const defaultOptionRenderer = ({option, inList}) => (
-    <span
-        className={css`
-            max-width: 100%;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        `}
-    >
-    {inList && option.icon ? option.icon({
-        height: 16,
-        style: {marginRight: 8, color: '#6C9AEF'}
-    }) : null}
-        {option.name ? option.name : <div>&nbsp;</div>}
-    </span>
-)
+import defaultNoOptionsRenderer from './defaultNoOptionsRenderer'
+import defaultOptionRenderer from './defaultOptionRenderer'
 
 export default class Select extends React.Component {
 
@@ -87,6 +18,7 @@ export default class Select extends React.Component {
         clearable: PropTypes.bool,
         alignLeft: PropTypes.bool,
         value: PropTypes.string,
+        noOptionsRenderer: PropTypes.func,
         optionRenderer: PropTypes.func,
         options: PropTypes.arrayOf(
             PropTypes.shape({
@@ -104,6 +36,7 @@ export default class Select extends React.Component {
     render() {
 
         const optionRenderer = this.props.optionRenderer || defaultOptionRenderer
+        const noOptionsRenderer = this.props.noOptionsRenderer || defaultNoOptionsRenderer
 
         const option = this.props.options.find(option => {
             return option.id === this.props.value
@@ -169,52 +102,16 @@ export default class Select extends React.Component {
                         </div>
                     </div>
                     {this.state.open ? (
-                        <ClickOutside
-                            className={cx(
-                                css`
-                                background-color: #282D33;
-                                padding: 8px;
-                                position: absolute;
-                                top: 100%;
-                                z-index: 1;
-                                border-radius: 6px;
-                                color: #fff;
-                                min-width: 220px;
-                            `, this.props.alignLeft ? css`
-                                left: 0;
-                            ` : css`
-                                right: 0;
-                            `
-                            )}
+                        <OptionList
+                            alignLeft={this.props.alignLeft}
+                            value={this.props.value}
+                            options={this.props.options}
+                            clearable={this.props.clearable}
+                            onOptionClick={this.handleChange}
+                            noOptionsRenderer={noOptionsRenderer}
+                            optionRenderer={optionRenderer}
                             onClickOutside={this.close}
-                        >
-                            {this.props.clearable ? (
-                                <EmptyOption
-                                    selected={this.props.value === null}
-                                    onClick={() => this.handleChange({
-                                        id: null
-                                    })}
-                                />
-                            ) : null}
-                            {this.props.options.map((option) => {
-
-                                const selected = option.id === this.props.value
-
-                                return optionItemRenderer({
-                                    className: createOptionClassName({
-                                        selected
-                                    }),
-                                    key: option.id,
-                                    id: option.id,
-                                    option,
-                                    selected,
-                                    optionRenderer,
-                                    onClick: () => this.handleChange({
-                                        id: option.id
-                                    })
-                                })
-                            })}
-                        </ClickOutside>
+                        />
                     ) : null}
                 </div>
             </div>
