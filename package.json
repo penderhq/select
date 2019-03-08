@@ -1,6 +1,6 @@
 {
   "name": "@cmds/select",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Used for selecting one option from a list of options.",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -22,12 +22,12 @@
   },
   "dependencies": {
     "@cmds/icons": "^0.1.0",
-    "emotion": "^10.0.6",
     "prop-types": "^15.6.2",
     "react-click-outside": "github:tj/react-click-outside"
   },
   "peerDependencies": {
-    "react": "16.x"
+    "react": "16.x",
+    "emotion": "10.x"
   },
   "devDependencies": {
     "nwb": "0.23.x",

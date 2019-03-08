@@ -5,6 +5,8 @@ import {injectGlobal} from 'emotion'
 import gridView from '@cmds/icons/es/gridView'
 import listView from '@cmds/icons/es/listView'
 import galleryView from '@cmds/icons/es/galleryView'
+import plus from '@cmds/icons/es/plus'
+import Button from './Button'
 
 injectGlobal`
     * {
@@ -336,23 +338,12 @@ class Example6 extends Component {
 
                     `}
                 >
-                    <button
-                        type={'button'}
-                        className={css`
-                            padding-top: 4px;
-                            padding-bottom: 4px;
-                            padding-left: 16px;
-                            padding-right: 16px;
-                            border-radius: 3px;
-                            background-color: hsla(0,0%,0%,0.05);
-                            font-weight: 500;
-                            color: #111;
-                            border: none;
-                        `}
+                    <Button
+                        icon={plus}
                         onClick={() => this.setState({open: true})}
                     >
                         Select an option
-                    </button>
+                    </Button>
                     {this.state.open ? (
                         <OptionList
                             className={css`

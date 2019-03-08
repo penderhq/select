@@ -9,10 +9,7 @@ import PropTypes from 'prop-types'
 
 const createOptionClassName = ({selected}) => cx(
     css`
-        padding-top: 4px;
-        padding-bottom: 4px;
-        padding-left: 8px;
-        padding-right: 8px;
+        padding: 8px 15px;
         cursor: pointer;
         align-items: center;
         display: flex;
@@ -20,10 +17,16 @@ const createOptionClassName = ({selected}) => cx(
         &:active {
             opacity: 0.75;
         }
+        &:hover {
+            background-color: #e6f1ff;
+        }
     `, selected ? css`
-        background-color: #fff;
-        border-radius: 3px;
-        color: #000;
+        background-color: #07f;
+        color: #fff;
+        &:hover {
+            background-color: #005fcc;
+            color: #fff;
+        }
     ` : null
 )
 
@@ -31,9 +34,11 @@ export default class OptionList extends React.Component {
 
     static propTypes = {
         className: PropTypes.string,
+        inline: PropTypes.bool,
         clearable: PropTypes.bool,
         alignLeft: PropTypes.bool,
         value: PropTypes.string,
+        iconGetter: PropTypes.func,
         optionRenderer: PropTypes.func,
         noOptionsRenderer: PropTypes.func,
         options: PropTypes.arrayOf(
@@ -48,21 +53,28 @@ export default class OptionList extends React.Component {
 
     render() {
 
+        const {iconGetter} = this.props
         const optionRenderer = this.props.optionRenderer || defaultOptionRenderer
         const noOptionsRenderer = this.props.noOptionsRenderer || defaultNoOptionsRenderer
 
         return (
             <ClickOutside
                 className={cx(
+                    !this.props.inline ? css`
+                     top: 100%;
+                        position: absolute;
+                        z-index: 1;
+                    ` : null,
                     css`
-                                background-color: #282D33;
-                                padding: 8px;
-                                position: absolute;
-                                top: 100%;
-                                z-index: 1;
-                                border-radius: 6px;
-                                color: #fff;
-                                min-width: 220px;
+                        background-color: rgb(255, 255, 255);
+                        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px;
+                        margin-bottom: 8px;
+                        margin-top: 8px;
+                        padding-top: 4px;
+                        padding-bottom: 4px;
+                        width: 100%;
+                        box-sizing: border-box;
+                        border-radius: 4px;
                             `, this.props.alignLeft ? css`
                                 left: 0;
                             ` : css`
@@ -93,6 +105,7 @@ export default class OptionList extends React.Component {
                         option,
                         selected,
                         optionRenderer,
+                        iconGetter,
                         onClick: () => this.props.onOptionClick({
                             id: option.id
                         })
