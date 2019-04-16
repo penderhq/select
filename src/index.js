@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import arrowDown from '@cmds/icons/es/arrowDown'
+import arrowDown from '@cmds/icons/lib/arrowDown'
 import {css, cx} from 'emotion'
 import OptionList from './OptionList'
 
