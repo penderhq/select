@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Heading, Paragraph, Canvas, Box} from '@cmds/demo-utils'
 import {render} from 'react-dom'
 import {css} from 'emotion'
 import {injectGlobal} from 'emotion'
@@ -14,6 +15,7 @@ injectGlobal`
     }
     body {
         font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+        margin: 0;
     }
 `
 
@@ -28,16 +30,10 @@ class Example1 extends Component {
 
     render() {
         return <div>
-            <h2>
+            <Heading>
                 Default
-            </h2>
-            <div
-                className={css`
-                    width: 200px;
-                    height: 40px;
-                    display: flex;
-                `}
-            >
+            </Heading>
+            <Box>
                 <Select
                     value={this.state.value}
                     alignLeft={true}
@@ -58,13 +54,15 @@ class Example1 extends Component {
                         })
                     }}
                 />
-            </div>
-            <h3>
+            </Box>
+            <Paragraph>
                 State
-            </h3>
-            <pre>
-                {JSON.stringify(this.state, null, 2)}
-            </pre>
+            </Paragraph>
+            <Box>
+                <pre>
+                    {JSON.stringify(this.state, null, 2)}
+                </pre>
+            </Box>
         </div>
     }
 }
@@ -77,16 +75,10 @@ class Example2 extends Component {
 
     render() {
         return <div>
-            <h2>
+            <Heading>
                 With icon
-            </h2>
-            <div
-                className={css`
-                    width: 200px;
-                    height: 40px;
-                    display: flex;
-                `}
-            >
+            </Heading>
+            <Box>
                 <Select
                     value={this.state.value}
                     alignLeft={true}
@@ -110,13 +102,15 @@ class Example2 extends Component {
                         })
                     }}
                 />
-            </div>
-            <h3>
+            </Box>
+            <Paragraph>
                 State
-            </h3>
-            <pre>
-                {JSON.stringify(this.state, null, 2)}
-            </pre>
+            </Paragraph>
+            <Box>
+                <pre>
+                    {JSON.stringify(this.state, null, 2)}
+                </pre>
+            </Box>
         </div>
     }
 }
@@ -129,16 +123,10 @@ class Example3 extends Component {
 
     render() {
         return <div>
-            <h2>
+            <Heading>
                 Clearable
-            </h2>
-            <div
-                className={css`
-                    width: 200px;
-                    height: 40px;
-                    display: flex;
-                `}
-            >
+            </Heading>
+            <Box>
                 <Select
                     clearable={true}
                     value={this.state.value}
@@ -160,13 +148,15 @@ class Example3 extends Component {
                         })
                     }}
                 />
-            </div>
-            <h3>
+            </Box>
+            <Paragraph>
                 State
-            </h3>
-            <pre>
-                {JSON.stringify(this.state, null, 2)}
-            </pre>
+            </Paragraph>
+            <Box>
+                <pre>
+                    {JSON.stringify(this.state, null, 2)}
+                </pre>
+            </Box>
         </div>
     }
 }
@@ -203,16 +193,10 @@ class Example4 extends Component {
 
     render() {
         return <div>
-            <h2>
-                Custom optionRenderer
-            </h2>
-            <div
-                className={css`
-                    width: 200px;
-                    height: 40px;
-                    display: flex;
-                `}
-            >
+            <Heading>
+                Custom Option Rendering
+            </Heading>
+            <Box>
                 <Select
                     clearable={true}
                     value={this.state.value}
@@ -235,13 +219,15 @@ class Example4 extends Component {
                         })
                     }}
                 />
-            </div>
-            <h3>
+            </Box>
+            <Paragraph>
                 State
-            </h3>
-            <pre>
-                {JSON.stringify(this.state, null, 2)}
-            </pre>
+            </Paragraph>
+            <Box>
+                <pre>
+                    {JSON.stringify(this.state, null, 2)}
+                </pre>
+            </Box>
         </div>
     }
 }
@@ -254,15 +240,10 @@ class Example5 extends Component {
 
     render() {
         return <div>
-            <h2>
-                Inline OptionList
-            </h2>
-            <div
-                className={css`
-                    width: 200px;
-                    display: flex;
-                `}
-            >
+            <Heading>
+                Inline Option List
+            </Heading>
+            <Box>
                 <OptionList
                     className={css`
                         position: relative;
@@ -287,13 +268,15 @@ class Example5 extends Component {
                         })
                     }}
                 />
-            </div>
-            <h3>
+            </Box>
+            <Paragraph>
                 State
-            </h3>
-            <pre>
-                {JSON.stringify(this.state, null, 2)}
-            </pre>
+            </Paragraph>
+            <Box>
+                <pre>
+                    {JSON.stringify(this.state, null, 2)}
+                </pre>
+            </Box>
         </div>
     }
 }
@@ -323,70 +306,74 @@ class Example6 extends Component {
         })
 
         return <div>
-            <h2>
-                Button with OptionList
-            </h2>
-            <div
-                className={css`
+            <Heading>
+                Button with Option List
+            </Heading>
+            <Box>
+                <div
+                    className={css`
                     width: 200px;
                     margin-bottom: 24px;
                 `}
-            >
-                <div
-                    className={css`
+                >
+                    <div
+                        className={css`
                         position: relative;
 
                     `}
-                >
-                    <Button
-                        icon={plus}
-                        onClick={() => this.setState({open: true})}
                     >
-                        Select an option
-                    </Button>
-                    {this.state.open ? (
-                        <OptionList
-                            className={css`
+                        <Button
+                            icon={plus}
+                            onClick={() => this.setState({open: true})}
+                        >
+                            Select an option
+                        </Button>
+                        {this.state.open ? (
+                            <OptionList
+                                className={css`
                                 margin-top: -21px;
                             `}
-                            alignLeft={true}
-                            options={options}
-                            onOptionClick={({id}) => {
+                                alignLeft={true}
+                                options={options}
+                                onOptionClick={({id}) => {
 
-                                const options = [].concat(this.state.options)
+                                    const options = [].concat(this.state.options)
 
-                                options.push(id)
+                                    options.push(id)
 
-                                this.setState({
-                                    options,
-                                    open: false
-                                })
-                            }}
-                            onClickOutside={() => this.setState({open: false})}
-                        />
-                    ) : null}
+                                    this.setState({
+                                        options,
+                                        open: false
+                                    })
+                                }}
+                                onClickOutside={() => this.setState({open: false})}
+                            />
+                        ) : null}
+                    </div>
                 </div>
-            </div>
-            <div>
-                {this.state.options.map((id) => {
+                <div>
+                    {this.state.options.map((id) => {
 
-                    const option = availableOptions.find(option => {
-                        return option.id === id
-                    })
+                        const option = availableOptions.find(option => {
+                            return option.id === id
+                        })
 
-                    return (
-                        <div className={css`margin-bottom: 8px;`}>
-                            {option.name} <button type={'button'} onClick={() => this.handleRemoveOption({id})}>remove</button>
-                        </div>
-                    )
-                })}
-            </div>
-            <h3>
+                        return (
+                            <div className={css`margin-bottom: 8px;`}>
+                                {option.name} <button type={'button'} onClick={() => this.handleRemoveOption({id})}>remove</button>
+                            </div>
+                        )
+                    })}
+                </div>
+            </Box>
+            <Paragraph>
                 State
-            </h3>
-            <pre>
-                {JSON.stringify(this.state, null, 2)}
-            </pre>
+            </Paragraph>
+            <Box>
+                <pre>
+                    {JSON.stringify(this.state, null, 2)}
+                </pre>
+            </Box>
         </div>
     }
 
@@ -405,15 +392,14 @@ class Demo extends React.Component {
     render() {
 
         return (
-            <div>
-                <h1>Select Demo</h1>
+            <Canvas>
                 <Example1/>
                 <Example2/>
                 <Example3/>
                 <Example4/>
                 <Example5/>
                 <Example6/>
-            </div>
+            </Canvas>
         )
     }
 }
