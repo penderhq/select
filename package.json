@@ -1,5 +1,5 @@
 {
-  "name": "@cmds/select",
+  "name": "@pndr/select",
   "version": "0.7.0",
   "description": "Used for selecting one option from a list of options.",
   "main": "lib/index.js",
@@ -11,7 +11,7 @@
     "umd"
   ],
   "scripts": {
-    "deploy": "cd demo/dist && surge --project ./ --domain cmds-select.surge.sh",
+    "deploy": "cd demo/dist && surge --project ./ --domain pndr-select.surge.sh",
     "build": "nwb build-react-component",
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
@@ -21,16 +21,16 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
-    "@cmds/icons": "^0.1.0",
     "prop-types": "^15.6.2",
     "react-click-outside": "github:tj/react-click-outside"
   },
   "peerDependencies": {
-    "react": "16.x",
-    "emotion": "10.x"
+    "emotion": "10.x",
+    "react": "16.x"
   },
   "devDependencies": {
-    "@cmds/demo-utils": "^0.2.0",
+    "@pndr/demo-utils": "^0.3.0",
+    "@pndr/icons": "^0.4.0",
     "emotion": "^10.0.9",
     "nwb": "0.23.x",
     "react": "^16.7.0",

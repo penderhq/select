@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
-import {Heading, Paragraph, Canvas, Box} from '@cmds/demo-utils'
+import {Heading, Paragraph, Canvas, Box} from '@pndr/demo-utils'
 import {render} from 'react-dom'
 import {css} from 'emotion'
 import {injectGlobal} from 'emotion'
-import gridView from '@cmds/icons/lib/gridView'
-import listView from '@cmds/icons/lib/listView'
-import galleryView from '@cmds/icons/lib/galleryView'
-import plus from '@cmds/icons/lib/plus'
+import gridView from '@pndr/icons/lib/gridView'
+import listView from '@pndr/icons/lib/listView'
+import galleryView from '@pndr/icons/lib/galleryView'
+import plus from '@pndr/icons/lib/plus'
 import Button from './Button'
 
 injectGlobal`

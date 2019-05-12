@@ -1,10 +1,12 @@
 import React from 'react'
 import {css, cx} from 'emotion'
+import defaultEmptyRenderer from './defaultEmptyRenderer';
 
 export default ({selected, onClick}) => (
     <div
         className={cx(
             css`
+            min-height: 34px;
             padding: 8px 15px;
             cursor: pointer;
             align-items: center;
@@ -23,7 +25,7 @@ export default ({selected, onClick}) => (
         )}
         onClick={onClick}
     >
-        <div>&nbsp;</div>
+        {defaultEmptyRenderer()}
     </div>
 )
 

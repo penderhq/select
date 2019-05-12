@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import arrowDown from '@cmds/icons/lib/arrowDown'
-import {css, cx} from 'emotion'
+import arrowDown from '@pndr/icons/lib/arrowDown'
+import { css, cx } from 'emotion'
 import OptionList from './OptionList'
 
 import defaultNoOptionsRenderer from './defaultNoOptionsRenderer'
 import defaultOptionRenderer from './defaultOptionRenderer'
+import defaultEmptyRenderer from './defaultEmptyRenderer';
 
 export default class Select extends React.Component {
 
@@ -37,7 +38,7 @@ export default class Select extends React.Component {
 
     render() {
 
-        const {iconGetter} = this.props
+        const { iconGetter } = this.props
         const optionRenderer = this.props.optionRenderer || defaultOptionRenderer
         const noOptionsRenderer = this.props.noOptionsRenderer || defaultNoOptionsRenderer
 
@@ -83,7 +84,7 @@ export default class Select extends React.Component {
                             transition-duration: 0s;
                     ` : null
                     )}
-                    onClick={() => this.setState({open: !this.state.open})}
+                    onClick={() => this.setState({ open: !this.state.open })}
                 >
                     <div
                         className={css`
@@ -103,15 +104,13 @@ export default class Select extends React.Component {
                             `, this.props.alignRight ? css`justify-content: flex-end` : null
                             )}
                         >
-                            {option ? (
-                                optionRenderer({
-                                    option,
-                                    iconGetter
-                                })
-                            ) : null}
+                            {option ? optionRenderer({
+                                option,
+                                iconGetter
+                            }) : defaultEmptyRenderer()}
                         </div>
                         <div>
-                            {arrowDown({width: 12})}
+                            {arrowDown({ width: 12 })}
                         </div>
                     </div>
                 </div>
@@ -134,7 +133,7 @@ export default class Select extends React.Component {
         )
     }
 
-    handleChange = ({id}) => {
+    handleChange = ({ id }) => {
 
         this.setState({
             open: false
