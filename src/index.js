@@ -12,12 +12,18 @@ export default class Select extends React.Component {
 
     static defaultProps = {
         clearable: false,
-        alignRight: false
+        alignRight: false,
+        size: 'md'
     }
 
     static propTypes = {
         inline: PropTypes.bool,
         clearable: PropTypes.bool,
+        disabled: PropTypes.bool,
+        size: PropTypes.oneOf([
+            'sm',
+            'md'
+        ]),
         alignLeft: PropTypes.bool,
         value: PropTypes.string,
         noOptionsRenderer: PropTypes.func,
@@ -38,7 +44,7 @@ export default class Select extends React.Component {
 
     render() {
 
-        const { iconGetter } = this.props
+        const { iconGetter, size } = this.props
         const optionRenderer = this.props.optionRenderer || defaultOptionRenderer
         const noOptionsRenderer = this.props.noOptionsRenderer || defaultNoOptionsRenderer
 
@@ -50,6 +56,7 @@ export default class Select extends React.Component {
             <div
                 className={css`
                     position: relative;
+                    width: 100%;
                 `}
             >
                 <div
@@ -64,18 +71,22 @@ export default class Select extends React.Component {
                         display: flex;
                         align-items: center;
                         font-size: 16px;
-                        height: 38px;
+                        height: ${size === 'sm' ? '30px' : '38px'};
                         line-height: 1.42857;
                         padding: 5px 15px;
                         transition: border-color .15s ease-in-out;
-                        max-width: 100%;
-                        width: 280px;
-                        &:active {
-                            -webkit-transition-duration: 0s;
-                            border-color: #07f;
-                            outline: 0;
-                            transition-duration: 0s;
-                        }
+                        width: 100%;
+                        cursor: pointer;
+                    `,
+                    !this.props.disabled ? css`
+                    &:active {
+                        -webkit-transition-duration: 0s;
+                        border-color: #07f;
+                        outline: 0;
+                        transition-duration: 0s;
+                    }
+                    ` : css`
+                        background-color: #f9f9f9;
                     `,
                         this.state.open ? css`
                             -webkit-transition-duration: 0s;
@@ -84,7 +95,7 @@ export default class Select extends React.Component {
                             transition-duration: 0s;
                     ` : null
                     )}
-                    onClick={() => this.setState({ open: !this.state.open })}
+                    onClick={this.handleToggle}
                 >
                     <div
                         className={css`
@@ -131,6 +142,17 @@ export default class Select extends React.Component {
             </div>
 
         )
+    }
+
+    handleToggle = () => {
+
+        if (this.props.disabled) {
+            return
+        }
+
+        this.setState({
+            open: !this.state.open
+        })
     }
 
     handleChange = ({ id }) => {

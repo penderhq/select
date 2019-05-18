@@ -1,8 +1,8 @@
-import React, {Component} from 'react'
-import {Heading, Paragraph, Canvas, Box} from '@pndr/demo-utils'
-import {render} from 'react-dom'
-import {css} from 'emotion'
-import {injectGlobal} from 'emotion'
+import React, { Component } from 'react'
+import { Heading, Paragraph, Canvas, Box } from '@pndr/demo-utils'
+import { render } from 'react-dom'
+import { css } from 'emotion'
+import { injectGlobal } from 'emotion'
 import gridView from '@pndr/icons/lib/gridView'
 import listView from '@pndr/icons/lib/listView'
 import galleryView from '@pndr/icons/lib/galleryView'
@@ -22,7 +22,7 @@ injectGlobal`
 import Select from '../../src'
 import OptionList from '../../src/OptionList'
 
-class Example1 extends Component {
+class Example extends Component {
 
     state = {
         value: 'opt1'
@@ -30,13 +30,12 @@ class Example1 extends Component {
 
     render() {
         return <div>
-            <Heading>
-                Default
-            </Heading>
             <Box>
                 <Select
                     value={this.state.value}
                     alignLeft={true}
+                    size={this.props.size}
+                    disabled={this.props.disabled}
                     options={[{
                         id: 'opt1',
                         name: 'Option 1'
@@ -47,7 +46,7 @@ class Example1 extends Component {
                         id: 'opt3',
                         name: 'Option 3'
                     }]}
-                    onChange={({value}) => {
+                    onChange={({ value }) => {
 
                         this.setState({
                             value
@@ -95,7 +94,7 @@ class Example2 extends Component {
                         icon: listView,
                         name: 'List view'
                     }]}
-                    onChange={({value}) => {
+                    onChange={({ value }) => {
 
                         this.setState({
                             value
@@ -141,7 +140,7 @@ class Example3 extends Component {
                         id: 'opt3',
                         name: 'Option 3'
                     }]}
-                    onChange={({value}) => {
+                    onChange={({ value }) => {
 
                         this.setState({
                             value
@@ -167,7 +166,7 @@ class Example4 extends Component {
         value: 'opt1'
     }
 
-    optionRenderer = ({option}) => (
+    optionRenderer = ({ option }) => (
         <div
             className={css`
                     background-color: rgb(222, 54, 24);
@@ -212,7 +211,7 @@ class Example4 extends Component {
                         id: 'opt3',
                         name: 'Option 3'
                     }]}
-                    onChange={({value}) => {
+                    onChange={({ value }) => {
 
                         this.setState({
                             value
@@ -261,7 +260,7 @@ class Example5 extends Component {
                         id: 'opt3',
                         name: 'Option 3'
                     }]}
-                    onOptionClick={({id}) => {
+                    onOptionClick={({ id }) => {
 
                         this.setState({
                             value: id
@@ -324,7 +323,7 @@ class Example6 extends Component {
                     >
                         <Button
                             icon={plus}
-                            onClick={() => this.setState({open: true})}
+                            onClick={() => this.setState({ open: true })}
                         >
                             Select an option
                         </Button>
@@ -335,7 +334,7 @@ class Example6 extends Component {
                             `}
                                 alignLeft={true}
                                 options={options}
-                                onOptionClick={({id}) => {
+                                onOptionClick={({ id }) => {
 
                                     const options = [].concat(this.state.options)
 
@@ -346,7 +345,7 @@ class Example6 extends Component {
                                         open: false
                                     })
                                 }}
-                                onClickOutside={() => this.setState({open: false})}
+                                onClickOutside={() => this.setState({ open: false })}
                             />
                         ) : null}
                     </div>
@@ -360,7 +359,7 @@ class Example6 extends Component {
 
                         return (
                             <div className={css`margin-bottom: 8px;`}>
-                                {option.name} <button type={'button'} onClick={() => this.handleRemoveOption({id})}>remove</button>
+                                {option.name} <button type={'button'} onClick={() => this.handleRemoveOption({ id })}>remove</button>
                             </div>
                         )
                     })}
@@ -377,7 +376,7 @@ class Example6 extends Component {
         </div>
     }
 
-    handleRemoveOption = ({id}) => {
+    handleRemoveOption = ({ id }) => {
 
         const options = this.state.options.filter(optionId => optionId !== id)
 
@@ -393,15 +392,33 @@ class Demo extends React.Component {
 
         return (
             <Canvas>
-                <Example1/>
-                <Example2/>
-                <Example3/>
-                <Example4/>
-                <Example5/>
-                <Example6/>
+                <Heading>
+                    Default
+                </Heading>
+                <Paragraph>
+                    Default select
+                </Paragraph>
+                <Example />
+                <Paragraph>
+                    Select in small size
+                </Paragraph>
+                <Example
+                    size={'sm'}
+                />
+                <Paragraph>
+                    Select that's been disabled
+                </Paragraph>
+                <Example
+                    disabled={true}
+                />
+                <Example2 />
+                <Example3 />
+                <Example4 />
+                <Example5 />
+                <Example6 />
             </Canvas>
         )
     }
 }
 
-render(<Demo/>, document.querySelector('#demo'))
+render(<Demo />, document.querySelector('#demo'))

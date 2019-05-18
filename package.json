@@ -1,6 +1,6 @@
 {
   "name": "@pndr/select",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Used for selecting one option from a list of options.",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -21,7 +21,7 @@
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {
-    "prop-types": "^15.6.2",
+    "prop-types": "^15.7.2",
     "react-click-outside": "github:tj/react-click-outside"
   },
   "peerDependencies": {
