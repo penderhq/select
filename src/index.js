@@ -1,12 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import arrowDown from '@pndr/icons/lib/arrowDown'
 import { css, cx } from 'emotion'
 import OptionList from './OptionList'
 
 import defaultNoOptionsRenderer from './defaultNoOptionsRenderer'
 import defaultOptionRenderer from './defaultOptionRenderer'
 import defaultEmptyRenderer from './defaultEmptyRenderer';
+
+const arrowUpDown = (props) => (
+    <svg {...props} viewBox="0 0 16 16">
+        <path d="M11.891 9.992a1 1 0 1 1 1.416 1.415l-4.3 4.3a1 1 0 0 1-1.414 0l-4.3-4.3A1 1 0 0 1 4.71 9.992l3.59 3.591 3.591-3.591zm0-3.984L8.3 2.417 4.709 6.008a1 1 0 0 1-1.416-1.415l4.3-4.3a1 1 0 0 1 1.414 0l4.3 4.3a1 1 0 1 1-1.416 1.415z" />
+    </svg>
+)
 
 export default class Select extends React.Component {
 
@@ -65,8 +70,8 @@ export default class Select extends React.Component {
                         position: relative;
                         appearance: none;
                         background-color: #fff;
-                        border: 1px solid #d9d9d9;
-                        border-radius: 3px;
+                        box-shadow: 0 0 0 1px rgba(0,0,0,.09), 0 1px 0 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.1);
+                        border-radius: 6px;
                         color: #191919;
                         display: flex;
                         align-items: center;
@@ -78,10 +83,10 @@ export default class Select extends React.Component {
                         width: 100%;
                         cursor: pointer;
                     `,
-                    !this.props.disabled ? css`
+                        !this.props.disabled ? css`
                     &:active {
                         -webkit-transition-duration: 0s;
-                        border-color: #07f;
+                        border-color: #0022fd;
                         outline: 0;
                         transition-duration: 0s;
                     }
@@ -90,7 +95,7 @@ export default class Select extends React.Component {
                     `,
                         this.state.open ? css`
                             -webkit-transition-duration: 0s;
-                            border-color: #07f;
+                            box-shadow: inset 0 0 0 2px #0022fd, 0 2px 4px rgba(0,0,0,.1), 0 0 1px rgba(0,0,0,.1);
                             outline: 0;
                             transition-duration: 0s;
                     ` : null
@@ -121,7 +126,8 @@ export default class Select extends React.Component {
                             }) : defaultEmptyRenderer()}
                         </div>
                         <div>
-                            {arrowDown({ width: 12 })}
+
+                            {arrowUpDown({ width: 12 })}
                         </div>
                     </div>
                 </div>

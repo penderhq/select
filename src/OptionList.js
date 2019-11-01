@@ -1,13 +1,13 @@
 import React from 'react'
 import ClickOutside from 'react-click-outside'
-import {css, cx} from 'emotion'
+import { css, cx } from 'emotion'
 import EmptyOption from './EmptyOption'
 import defaultOptionRenderer from './defaultOptionRenderer'
 import optionItemRenderer from './optionItemRenderer'
 import defaultNoOptionsRenderer from './defaultNoOptionsRenderer'
 import PropTypes from 'prop-types'
 
-const createOptionClassName = ({selected}) => cx(
+const createOptionClassName = ({ selected }) => cx(
     css`
         padding: 8px 15px;
         cursor: pointer;
@@ -18,13 +18,13 @@ const createOptionClassName = ({selected}) => cx(
             opacity: 0.75;
         }
         &:hover {
-            background-color: #e6f1ff;
+            background-color: rgba(0, 34, 253, 0.06);
         }
     `, selected ? css`
-        background-color: #07f;
+        background-color: #0022fd;
         color: #fff;
         &:hover {
-            background-color: #005fcc;
+            background-color: #0022fd;
             color: #fff;
         }
     ` : null
@@ -53,7 +53,7 @@ export default class OptionList extends React.Component {
 
     render() {
 
-        const {iconGetter} = this.props
+        const { iconGetter } = this.props
         const optionRenderer = this.props.optionRenderer || defaultOptionRenderer
         const noOptionsRenderer = this.props.noOptionsRenderer || defaultNoOptionsRenderer
 
