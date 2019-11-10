@@ -6,6 +6,7 @@ import OptionList from './OptionList'
 import defaultNoOptionsRenderer from './defaultNoOptionsRenderer'
 import defaultOptionRenderer from './defaultOptionRenderer'
 import defaultEmptyRenderer from './defaultEmptyRenderer';
+import AdaptiveDialog from './AdaptiveDialog'
 
 const arrowUpDown = (props) => (
     <svg {...props} viewBox="0 0 16 16">
@@ -13,23 +14,34 @@ const arrowUpDown = (props) => (
     </svg>
 )
 
+class OptionListDialog extends React.Component {
+
+    render() {
+
+        return (
+            <OptionList
+                {...this.props}
+            />
+        )
+    }
+}
+
 export default class Select extends React.Component {
 
     static defaultProps = {
         clearable: false,
         alignRight: false,
-        size: 'md'
+        size: 'md',
+        title: 'Unnamed Select'
     }
 
     static propTypes = {
-        inline: PropTypes.bool,
         clearable: PropTypes.bool,
         disabled: PropTypes.bool,
         size: PropTypes.oneOf([
             'sm',
             'md'
         ]),
-        alignLeft: PropTypes.bool,
         value: PropTypes.string,
         noOptionsRenderer: PropTypes.func,
         iconGetter: PropTypes.func,
@@ -40,7 +52,8 @@ export default class Select extends React.Component {
                 name: PropTypes.string
             })
         ),
-        onChange: PropTypes.func
+        onChange: PropTypes.func,
+        title: PropTypes.string
     }
 
     state = {
@@ -65,6 +78,7 @@ export default class Select extends React.Component {
                 `}
             >
                 <div
+                    ref={'button'}
                     className={cx(
                         css`
                         position: relative;
@@ -132,7 +146,10 @@ export default class Select extends React.Component {
                     </div>
                 </div>
                 {this.state.open ? (
-                    <OptionList
+                    <AdaptiveDialog
+                        title={this.props.title}
+                        referenceElement={this.refs.button}
+                        popoverPlacement={'bottom-start'}
                         inline={this.props.inline}
                         alignLeft={this.props.alignLeft}
                         value={this.props.value}
@@ -143,6 +160,7 @@ export default class Select extends React.Component {
                         noOptionsRenderer={noOptionsRenderer}
                         optionRenderer={optionRenderer}
                         onClickOutside={this.close}
+                        component={OptionListDialog}
                     />
                 ) : null}
             </div>

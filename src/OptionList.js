@@ -13,7 +13,11 @@ const createOptionClassName = ({ selected }) => cx(
         cursor: pointer;
         align-items: center;
         display: flex;
-        min-height: 34px;
+        min-height: 44px;
+        box-shadow: rgba(55, 53, 47, 0.09) 0px 1px 0px;
+        &:last-of-type {
+            box-shadow: none;
+        }
         &:active {
             opacity: 0.75;
         }
@@ -60,25 +64,11 @@ export default class OptionList extends React.Component {
         return (
             <ClickOutside
                 className={cx(
-                    !this.props.inline ? css`
-                     top: 100%;
-                        position: absolute;
-                        z-index: 1;
-                    ` : null,
                     css`
-                        background-color: rgb(255, 255, 255);
-                        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px, rgba(0, 0, 0, 0.1) 0px 4px 11px;
-                        margin-bottom: 8px;
-                        margin-top: 8px;
                         padding-top: 4px;
                         padding-bottom: 4px;
                         width: 100%;
                         box-sizing: border-box;
-                        border-radius: 4px;
-                            `, this.props.alignLeft ? css`
-                                left: 0;
-                            ` : css`
-                                right: 0;
                             `,
                     this.props.className
                 )}

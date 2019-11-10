@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import { Heading, Paragraph, Canvas, Box } from '@pndr/demo-utils'
 import { render } from 'react-dom'
 import { css } from 'emotion'
@@ -7,7 +8,8 @@ import gridView from '@pndr/icons/lib/gridView'
 import listView from '@pndr/icons/lib/listView'
 import galleryView from '@pndr/icons/lib/galleryView'
 import plus from '@pndr/icons/lib/plus'
-import Button from './Button'
+import Button from '@pndr/button'
+import times from 'lodash/times'
 
 injectGlobal`
     * {
@@ -21,6 +23,7 @@ injectGlobal`
 
 import Select from '../../src'
 import OptionList from '../../src/OptionList'
+import AdaptiveDialog from '../../src/AdaptiveDialog'
 
 class Example extends Component {
 
@@ -45,6 +48,9 @@ class Example extends Component {
                     }, {
                         id: 'opt3',
                         name: 'Option 3'
+                    }, {
+                        id: 'opt4',
+                        name: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
                     }]}
                     onChange={({ value }) => {
 
@@ -93,6 +99,10 @@ class Example2 extends Component {
                         id: 'opt3',
                         icon: listView,
                         name: 'List view'
+                    }, {
+                        id: 'opt4',
+                        icon: listView,
+                        name: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
                     }]}
                     onChange={({ value }) => {
 
@@ -287,6 +297,11 @@ class Example6 extends Component {
         open: false
     }
 
+    componentDidMount() {
+
+        this.button = ReactDOM.findDOMNode(this.refs.button)
+    }
+
     render() {
 
         const availableOptions = [{
@@ -322,17 +337,15 @@ class Example6 extends Component {
                     `}
                     >
                         <Button
+                            ref={'button'}
                             icon={plus}
                             onClick={() => this.setState({ open: true })}
                         >
                             Select an option
                         </Button>
                         {this.state.open ? (
-                            <OptionList
-                                className={css`
-                                margin-top: -21px;
-                            `}
-                                alignLeft={true}
+                            <AdaptiveDialog
+                                referenceElement={this.button}
                                 options={options}
                                 onOptionClick={({ id }) => {
 
@@ -346,6 +359,7 @@ class Example6 extends Component {
                                     })
                                 }}
                                 onClickOutside={() => this.setState({ open: false })}
+                                component={OptionList}
                             />
                         ) : null}
                     </div>
@@ -358,7 +372,7 @@ class Example6 extends Component {
                         })
 
                         return (
-                            <div className={css`margin-bottom: 8px;`}>
+                            <div key={id} className={css`margin-bottom: 8px;`}>
                                 {option.name} <button type={'button'} onClick={() => this.handleRemoveOption({ id })}>remove</button>
                             </div>
                         )
@@ -386,6 +400,46 @@ class Example6 extends Component {
     }
 }
 
+
+class Example7 extends Component {
+
+    state = {
+        value: 'opt1'
+    }
+
+    render() {
+        return <div>
+            <Box>
+                <Select
+                    value={this.state.value}
+                    alignLeft={true}
+                    size={this.props.size}
+                    disabled={this.props.disabled}
+                    options={times(200).map(i => ({
+                        id: 'opt' + (i + 1),
+                        name: 'Option ' + (i + 1)
+                    }))}
+                    onChange={({ value }) => {
+
+                        this.setState({
+                            value
+                        })
+                    }}
+                />
+            </Box>
+            <Paragraph>
+                State
+            </Paragraph>
+            <Box>
+                <pre>
+                    {JSON.stringify(this.state, null, 2)}
+                </pre>
+            </Box>
+        </div>
+    }
+}
+
+
 class Demo extends React.Component {
 
     render() {
@@ -399,6 +453,10 @@ class Demo extends React.Component {
                     Default select
                 </Paragraph>
                 <Example />
+                <Paragraph>
+                    Long list
+                </Paragraph>
+                <Example7 />
                 <Paragraph>
                     Select in small size
                 </Paragraph>
