@@ -1,6 +1,6 @@
 {
   "name": "@pndr/select",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Used for selecting one option from a list of options.",
   "main": "lib/index.js",
   "module": "es/index.js",

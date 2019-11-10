@@ -117,13 +117,6 @@ export default class ResponsiveDialog extends React.Component {
             <Portal mobile={true} onClose={this.props.onClose}>
                 <div
                     className={css`
-                        position: fixed;
-                        top: 0;
-                        left: 0;
-                        right: 0;
-                        bottom: 0;
-                        overflow: hidden auto;
-                        background-color: #fff;
                         padding-top: 44px;
                         padding-bottom: 44px;
                     `}
